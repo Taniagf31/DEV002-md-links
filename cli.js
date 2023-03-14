@@ -2,20 +2,23 @@
 
 const mdLinks = require('./mdLinks'); // se importa la función mdLinks
 const process = require("process");
-const colors = require("colors");
+
 
 const path2 = process.argv[2];
 const pathOptions1 = process.argv[3];
 const pathOptions2 = process.argv[4];
-const arOptions = [pathOptions1, pathOptions2]; //Se crea un arreglo que contiene las opciones que se van a aplicar al análisis
+ //Se crea un arreglo que contiene las opcionejss que se van a aplicar al análisis
 
-mdLinks(path2, arOptions);
+
+mdLinks(path2, [pathOptions1, pathOptions2]);
 
 module.exports = mdLinks;
 
-// console.log(colors.bgYellow('Probando...'));
-// console.log(colors.rainbow('MdLinks'));
-// console.log(colors.magenta('trabajando con Node.js'));
-// console.log(colors.bgCyan('<3'));
+//linea 1 ejecutable de node
+//manejar los argumentos de la terminal
+//argv  un analizador de argumentos de línea de comandos simple para NodeJS. Para un analizador CLI con más funciones 
+
+
+
 
 

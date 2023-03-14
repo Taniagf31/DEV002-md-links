@@ -1,9 +1,13 @@
 {
-  "name": "md-links",
+  "name": "md-links-taniafe",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"
   },
+  "bin":{
+    "taniafe": "./cli.js"
+  },
+
   "bootcamp": {
     "createdAt": "2022-11-30T13:40:29.636Z",
     "version": "5.5.0",

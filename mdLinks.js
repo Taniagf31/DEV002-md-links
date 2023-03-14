@@ -5,16 +5,16 @@ const {
   brokenLinks,
   statsRep
 } = require("./function"); //use destructuración para importar funciones
-const colors = require('colors');
+
 
 const mdLinks = (path, options) => {
   return new Promise((res, rej) => {
     if (options[0] === undefined && options[1] === undefined) {
       const inputPath = addFileMd(path);
-      inputPath.map((content) => {
+      inputPath.map((element) => {
 
         //map recibe una funct y la funct recibe un elemento a iterar
-        routeFalse(content)
+        routeFalse(element)
           .then((data) => {
             console.log(data);
             return res(data);
@@ -29,8 +29,8 @@ const mdLinks = (path, options) => {
         (options[0] === "--stats" && options[1] === "--validate")
       ) {
         const inputPath = addFileMd(path);
-        inputPath.map((content) => {
-          routeFalse(content).then((data) => {
+        inputPath.map((element) => {
+          routeFalse(element).then((data) => {
             console.log(brokenLinks(data))
             return res (brokenLinks(data));
           });
@@ -43,20 +43,20 @@ const mdLinks = (path, options) => {
             .then((data) => {
               trueRoute(data).then((data)=> {
                 console.log(data) 
-                return resolve(data)
+                return res(data)
               }
               );
             })
             .catch((error) => {
-              return reject("La ruta ingresada es válida", error);
+              return rej("La ruta ingresada es válida", error);
             });
         });
       } else if (options[0] === "--stats") {
-        const arrMdStast = obtenerArchivosMd(path);
+        const arrMdStast = addFileMd(path);
         arrMdStast.map((element) => {
-          invalidateAllRoutes(element).then((data) => {
-            console.log(statsFunction(data));
-            return resolve(statsFunction(data));
+          routeFalse(element).then((data) => {
+            console.log(statsRep(data));
+            return res(statsRep(data));
           });
         });
       }
