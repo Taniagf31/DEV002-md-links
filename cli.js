@@ -7,10 +7,13 @@ const process = require("process");
 const path2 = process.argv[2];
 const pathOptions1 = process.argv[3];
 const pathOptions2 = process.argv[4];
- //Se crea un arreglo que contiene las opcionejss que se van a aplicar al análisis
+ //Se crea un arreglo que contiene las opciones que se van a aplicar al análisis
 
 
-mdLinks(path2, [pathOptions1, pathOptions2]);
+mdLinks(path2, [pathOptions1, pathOptions2]) 
+.then(res => console.log(res))
+.catch(error => console.log(error));
+
 
 module.exports = mdLinks;
 

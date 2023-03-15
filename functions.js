@@ -60,7 +60,12 @@ const recursive = (route) => {
 const readFileMd = (route) => {
   return new Promise((res, rej) => {
     fs.readFile(route, "utf-8", (error, data) => {
-      error ? rej("Ocurrió un error") : res(data);
+if (error) { rej('ocurrió un error')
+}
+else{ res(data)
+};
+
+      // error ? rej("Ocurrió un error") : res(data);
         
       });
     });
@@ -98,6 +103,7 @@ const routeFalse = (route) => {
         res(allLinks);
       })
       .catch((error) => {
+        // console.log(error);
         rej(error);
       });
   });

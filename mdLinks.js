@@ -4,7 +4,7 @@ const {
   trueRoute,
   brokenLinks,
   statsRep
-} = require("./function"); //use destructuración para importar funciones
+} = require("./functions"); //use destructuración para importar funciones
 
 
 const mdLinks = (path, options) => {
@@ -16,7 +16,7 @@ const mdLinks = (path, options) => {
         //map recibe una funct y la funct recibe un elemento a iterar
         routeFalse(element)
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             return res(data);
           })
           .catch((error) => {
@@ -31,18 +31,18 @@ const mdLinks = (path, options) => {
         const inputPath = addFileMd(path);
         inputPath.map((element) => {
           routeFalse(element).then((data) => {
-            console.log(brokenLinks(data))
+            trueRoute(data).then((data)=> {
             return res (brokenLinks(data));
-          });
+          })
         });
-
+      });
       } else if (options[0] === "--validate") {
         const arrMd = addFileMd(path);
         arrMd.map((element) => {
           routeFalse(element)
             .then((data) => {
               trueRoute(data).then((data)=> {
-                console.log(data) 
+                // console.log(data) 
                 return res(data)
               }
               );
@@ -53,11 +53,14 @@ const mdLinks = (path, options) => {
         });
       } else if (options[0] === "--stats") {
         const arrMdStast = addFileMd(path);
+       
         arrMdStast.map((element) => {
           routeFalse(element).then((data) => {
-            console.log(statsRep(data));
+            // console.log(statsRep(data));
             return res(statsRep(data));
-          });
+          })
+          .catch(error => console.log(error)) 
+          
         });
       }
     }
