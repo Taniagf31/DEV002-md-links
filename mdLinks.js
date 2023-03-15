@@ -1,20 +1,22 @@
 const {
   addFileMd,
   routeFalse,
+  trueRoute,
   brokenLinks,
-} = require("./function"); //use destructuración para importar funciones
-const colors = require('colors');
+  statsRep
+} = require("./functions"); //use destructuración para importar funciones
+
 
 const mdLinks = (path, options) => {
   return new Promise((res, rej) => {
     if (options[0] === undefined && options[1] === undefined) {
       const inputPath = addFileMd(path);
-      inputPath.map((content) => {
+      inputPath.map((element) => {
 
         //map recibe una funct y la funct recibe un elemento a iterar
-        routeFalse(content)
+        routeFalse(element)
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             return res(data);
           })
           .catch((error) => {
@@ -27,35 +29,38 @@ const mdLinks = (path, options) => {
         (options[0] === "--stats" && options[1] === "--validate")
       ) {
         const inputPath = addFileMd(path);
-        inputPath.map((content) => {
-          routeFalse(content).then((data) => {
-            console.log(brokenLinks(data))
+        inputPath.map((element) => {
+          routeFalse(element).then((data) => {
+            trueRoute(data).then((data)=> {
             return res (brokenLinks(data));
-          });
+          })
         });
-
+      });
       } else if (options[0] === "--validate") {
-        const arrMd = obtenerArchivosMd(path);
+        const arrMd = addFileMd(path);
         arrMd.map((element) => {
-          invalidateAllRoutes(element)
+          routeFalse(element)
             .then((data) => {
-              validateAllRoutes(data).then((data)=> {
-                console.log(data) 
-                return resolve(data)
+              trueRoute(data).then((data)=> {
+                // console.log(data) 
+                return res(data)
               }
               );
             })
             .catch((error) => {
-              return reject("La ruta ingresada es válida", error);
+              return rej("La ruta ingresada es válida", error);
             });
         });
       } else if (options[0] === "--stats") {
-        const arrMdStast = obtenerArchivosMd(path);
+        const arrMdStast = addFileMd(path);
+       
         arrMdStast.map((element) => {
-          invalidateAllRoutes(element).then((data) => {
-            console.log(statsFunction(data));
-            return resolve(statsFunction(data));
-          });
+          routeFalse(element).then((data) => {
+            // console.log(statsRep(data));
+            return res(statsRep(data));
+          })
+          .catch(error => console.log(error)) 
+          
         });
       }
     }
