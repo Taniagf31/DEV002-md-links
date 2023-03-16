@@ -37,7 +37,7 @@ const validDir = (route) => {
 const readFile = (route) => fs.readdirSync(route);
 
 //validar que la función sea md devuelve la ext se un arch
-const mdFile = (route) => (path.extname(route) === ".md" ? true : false);
+const mdFile = (route) => path.extname(route) === ".md" ? true : false;
 
 //recursividad
 const recursive = (route) => {

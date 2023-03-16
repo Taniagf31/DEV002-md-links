@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-
-const mdLinks = require('./mdLinks'); // se importa la función mdLinks
+const mdLinks = require("./mdLinks"); // se importa la función mdLinks
 const process = require("process");
 
 
@@ -10,10 +9,9 @@ const pathOptions2 = process.argv[4];
  //Se crea un arreglo que contiene las opciones que se van a aplicar al análisis
 
 
-mdLinks(path2, [pathOptions1, pathOptions2]) 
-.then(res => console.log(res))
-.catch(error => console.log(error));
-
+mdLinks(path2, [pathOptions1, pathOptions2]);
+// .then(res => console.log(res))
+// .catch(error => console.log(error));
 
 module.exports = mdLinks;
 

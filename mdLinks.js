@@ -26,12 +26,12 @@ const mdLinks = (path, options) => {
         (options[0] === "--validate" && options[1] === "--stats") || //condiciones dan sentido a las opciones 
         (options[0] === "--stats" && options[1] === "--validate") //validar abreviatura de options
       ) {
-        const inputPath = addFileMd(path);
-        inputPath.map((element) => {
+        const inputPath2 = addFileMd(path);
+        inputPath2.map((element) => {
           routeFalse(element).then((data) => {
             trueRoute(data).then((data)=> {
-              // console.log(brokenLinks(data));
-            return res (brokenLinks(data));
+              console.log(brokenLinks(data));
+            return res(brokenLinks(data));
           })
         });
       });
@@ -41,7 +41,7 @@ const mdLinks = (path, options) => {
           routeFalse(element)
             .then((data) => {
               trueRoute(data).then((data)=> {
-                // console.log(data) 
+                console.log(data) 
                 return res(data)
               });
             })
@@ -51,17 +51,18 @@ const mdLinks = (path, options) => {
         });
       } else if (options[0] === "--stats") {
         const arrMdStast = addFileMd(path);
-       
+       console.log(arrMdStast);
         arrMdStast.map((element) => {
           routeFalse(element).then((data) => {
             // console.log(statsRep(data));
             return res(statsRep(data));
-          })
-          .catch(error => console.log(error)) 
+          });
+          // .catch(error => console.log(error)) 
           
         });
       }
     }
   });
 };
+// mdLinks()
 module.exports = mdLinks;
