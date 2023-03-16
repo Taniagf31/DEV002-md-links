@@ -43,33 +43,24 @@ const mdFile = (route) => (path.extname(route) === ".md" ? true : false);
 const recursive = (route) => {
   let arrReadMd = [];
   if (mdFile(route)) {
-    arrReadMd.push(route); //se llena si la ruta tiene ext md si no es un directorio
+    arrReadMd.push(route);  //se llena si la ruta tiene ext md si no es un directorio
   } else if (validDir(route)) {
-    const contentRoute = readFile(route); //leer las rutas del directorio e itera el contenido que tiene
-    contentRoute.forEach((pathRoute) => {
-      //route es el elemt que se esta iterando del arr de string que me devolv contenRoute
-
-      arrReadMd = arrReadMd.concat(recursive(`${route}/${pathRoute}`));  
-    })
+    const contentRoute = readFile(route);  //leer las rutas del directorio e itera el contenido que tiene
+    contentRoute.forEach((pathRoute) => {  //pathRoute es el elemento que se esta iterando del array de string que me dev contenRoute 
+      arrReadMd = arrReadMd.concat(recursive(`${route}/${pathRoute}`));
+    });
   }
   return arrReadMd;
 };
-
 //lee directorios y retorna archivos md
-
 const readFileMd = (route) => {
   return new Promise((res, rej) => {
     fs.readFile(route, "utf-8", (error, data) => {
-if (error) { rej('ocurrió un error')
-}
-else{ res(data)
+      error ? rej("ocurrió un error") : res(data);
+    });
+  });
 };
 
-      // error ? rej("Ocurrió un error") : res(data);
-        
-      });
-    });
-};
 // const readFileMd = (route) => {
 // return new Promise((res, rej) => {
 // fs.readFile(route, "utf-8", (error, data) => {
@@ -133,7 +124,7 @@ const trueRoute = (allLinks) => {
             status: data.status, //se presenta con num
             statusText: data.statusText, //string
           };
-          return (objs);
+          return objs;
         })
         .catch((error) => {
           const failObject = {
@@ -141,7 +132,7 @@ const trueRoute = (allLinks) => {
             status: error.data ? 404 : 404,
             statusText: "FAIL",
           };
-          return(failObject);
+          return failObject;
         });
     })
   );
@@ -154,9 +145,9 @@ const trueRoute = (allLinks) => {
 // },
 // ]);
 
-// estadística de archivos repetidos (en caso de que hayan) console.log(new Set([50,90,30,'veinte', 'ocho', 90,30,'quince'])) //instancia de un modelo existente // set no funciona con lengh si no con size
+// estadística de archivos repetidos (en caso de que hayan)  //instancia de un modelo existente // set no funciona con lengh si no con size
 const statsRep = (allLinks) => {
-  // me va a devolver un arr de links
+  // me va a devolver un array de links
   const linksAr = allLinks.map((content) => content.href);
   const linksU = new Set(linksAr); // me va a dar linsk unicos
   return {
@@ -209,11 +200,10 @@ const addFileMd = (route) => {
   return recursive(route); // devuelve un array con archivos md
 };
 
-// addFileMd();
 module.exports = {
   addFileMd, //obtiene archivos md
-  routeFalse, //valida ruta false
-  trueRoute, //valida ruta true
+  routeFalse, //valida todo tipo de ruta (false)
+  trueRoute, //valida todo tipo de ruta (true)
   brokenLinks, //valida los links rotos
   statsRep, //devuelve stats
 };
