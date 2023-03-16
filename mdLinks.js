@@ -6,17 +6,15 @@ const {
   statsRep
 } = require("./functions"); //use destructuración para importar funciones
 
-
 const mdLinks = (path, options) => {
   return new Promise((res, rej) => {
     if (options[0] === undefined && options[1] === undefined) {
       const inputPath = addFileMd(path);
       inputPath.map((element) => {
-
         //map recibe una funct y la funct recibe un elemento a iterar
         routeFalse(element)
           .then((data) => {
-            // console.log(data);
+            console.log(data);
             return res(data);
           })
           .catch((error) => {
@@ -25,13 +23,14 @@ const mdLinks = (path, options) => {
       });
     } else {
       if (
-        (options[0] === "--validate" && options[1] === "--stats") ||
-        (options[0] === "--stats" && options[1] === "--validate")
+        (options[0] === "--validate" && options[1] === "--stats") || //condiciones dan sentido a las opciones 
+        (options[0] === "--stats" && options[1] === "--validate") //validar abreviatura de options
       ) {
         const inputPath = addFileMd(path);
         inputPath.map((element) => {
           routeFalse(element).then((data) => {
             trueRoute(data).then((data)=> {
+              // console.log(brokenLinks(data));
             return res (brokenLinks(data));
           })
         });
@@ -44,8 +43,7 @@ const mdLinks = (path, options) => {
               trueRoute(data).then((data)=> {
                 // console.log(data) 
                 return res(data)
-              }
-              );
+              });
             })
             .catch((error) => {
               return rej("La ruta ingresada es válida", error);
