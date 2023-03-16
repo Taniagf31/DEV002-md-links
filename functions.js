@@ -8,24 +8,18 @@ const colors = require("colors");
 //FUNCIONES A UTILIZAR
 
 //¿La ruta existe?
-// console.log(fs.existsSync('./pruebas'));
 const validPath = (route) => fs.existsSync(route);
 
 //¿La ruta es absoluta?
-// console.log(path.isAbsolute('./pruebas'));
 const absolutePath = (route) => path.isAbsolute(route);
 
 //convierte la ruta de relativa en absoluta
-// console.log(process.cwd("./pruebas"));
-// ruta transformada: C:\Users\tania\OneDrive\Escritorio\Proyectos Laboratoria\mdLinks\DEV002-md-links
-
 const transformAbs = (route) => {
   const validDir = process.cwd(); //verifica si el arcivo existe en el local
   return path.resolve(validDir, route); //si es directorio, devuelve una ruta absoluta
 };
 
 //¿Es un directorio?
-
 const validDir = (route) => {
   //devuelve 'true' si la ruta especificada es una carpeta válida, y 'false' si no lo es.
   const stats = fs.statSync(route);
@@ -33,10 +27,10 @@ const validDir = (route) => {
 };
 
 //lee los archivos del directorio
-//console.log(fs.readdirSync('./pruebas')); debería devolver un array con el contenido de ese directorio
+//debería devolver un array con el contenido de ese directorio
 const readFile = (route) => fs.readdirSync(route);
 
-//validar que la función sea md devuelve la ext se un arch
+//validar que la función sea md devuelve la ext de un archivo
 const mdFile = (route) => path.extname(route) === ".md" ? true : false;
 
 //recursividad
@@ -61,14 +55,6 @@ const readFileMd = (route) => {
   });
 };
 
-// const readFileMd = (route) => {
-// return new Promise((res, rej) => {
-// fs.readFile(route, "utf-8", (error, data) => {
-// error ? rej("ocurrió un error") : res(data);
-// });
-// });
-// };
-
 //Validar todo tipo de ruta 'false'
 const routeFalse = (route) => {
   return new Promise((res, rej) => {
@@ -76,14 +62,14 @@ const routeFalse = (route) => {
     readFileMd(route) //promesa(lento) probar con readme readContentMd
       .then((data) => {
         const regExp =
+
           /\[([\w\s\d]+)\]\(((?:\/|https?:\/\/)[\w\d./?=#]+[a-zA-Z0-9!-_$]+)\)/gi;
 
         //regExp.exec(data)//devuelve array con link que cumplan con la regEx...
 
         let resultRegEx = regExp.exec(data); //devuelve array iterado
-        while (resultRegEx !== null) {
-          // evitar que me devuelva null
-
+        while (resultRegEx !== null) { // evitar que me devuelva null
+          
           allLinks.push({
             href: resultRegEx[2],
             text: resultRegEx[1],
@@ -100,22 +86,13 @@ const routeFalse = (route) => {
   });
 };
 
-// routeFalse('README.md')
-//   .then((data) => {
-//     console.log(data)
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
-
 //validar ruta (true) devolver un array de objeto
-
 const trueRoute = (allLinks) => {
   // simulando parameter
   return Promise.all(
     allLinks.map((content) => {
       //cada objeto es una promesa y all me dev un array de promesa
-      return axios //peticiones http a un serv
+      return axios //peticiones http a un servidor
         .get(content.href) //hace peticion para obtener datos obtener inf de esa url
         .then((data) => {
           //axios
@@ -138,14 +115,7 @@ const trueRoute = (allLinks) => {
   );
 };
 // trueRoute([
-// {
-// href: "https://es.wikipedia.org/wiki/Markdown/tania",
-// text: "Markdown",
-// file: "README.md",
-// },
-// ]);
-
-// estadística de archivos repetidos (en caso de que hayan)  //instancia de un modelo existente // set no funciona con lengh si no con size
+// estadística de archivos repetidos (en caso de que hayan)  //instancia de un modelo existente 
 const statsRep = (allLinks) => {
   // me va a devolver un array de links
   const linksAr = allLinks.map((content) => content.href);
@@ -155,18 +125,6 @@ const statsRep = (allLinks) => {
     unique: linksU.size,
   };
 };
-// console.log(statsRep([
-//   {
-//     href: "https://es.wikipedia.org/wiki/Markdown/tania",
-//     text: "Markdown",
-//     file: "README.md",
-//   },
-//   {
-//     href: "https://es.wikipedia.org/wiki/Markdown/tania",
-//     text: "Markdown",
-//     file: "README.md",
-//   },
-// ]));
 //validar links rotos
 const brokenLinks = (allLinks) => {
   const brokenAr = allLinks.filter((content) => content.statusText === "FAIL"); //filtrar de acuerdo a una condición //devuelve un arr con los rotos
@@ -191,7 +149,7 @@ const brokenLinks = (allLinks) => {
 //         },
 //       ]))
 
-//obtener archivos md //usar ejemplo readme.md
+//obtener archivos md 
 const addFileMd = (route) => {
   if (validPath(route)) {
     absolutePath(route);

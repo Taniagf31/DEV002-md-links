@@ -29,7 +29,7 @@ const mdLinks = (path, options) => {
         const inputPath2 = addFileMd(path);
         inputPath2.map((element) => {
           routeFalse(element).then((data) => {
-            trueRoute(data).then((data)=> {
+            trueRoute(data).then((data)=> { 
               console.log(brokenLinks(data));
             return res(brokenLinks(data));
           })
