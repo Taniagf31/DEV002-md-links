@@ -1,11 +1,11 @@
 {
-  "name": "md-links-taniafe",
-  "version": "0.1.0",
+  "name": "md-links-taniagf",
+  "version": "0.1.1",
   "engines": {
     "node": ">=16.x"
   },
   "bin":{
-    "taniafe": "./cli.js"
+    "taniagf": "./cli.js"
   },
 
   "bootcamp": {
